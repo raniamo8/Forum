@@ -1,0 +1,109 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px; /* Beispielgröße für Inhalte */
+    margin: auto;
+}
+
+/* Light Mode Styles */
+.light-mode {
+    color: black; /* Schwarze Schrift für Light Mode */
+    background-color: white; /* Hintergrundfarbe */
+}
+
+.light-mode button, .light-mode a.button {
+    background-color: #DD2038; /* Button Hintergrundfarbe */
+    color: white; /* Button Schriftfarbe */
+    border: none;
+    padding: 10px 20px; /* Beispielpolsterung für Buttons */
+    cursor: pointer;
+}
+
+.light-mode .gray {
+    color: #747979; /* Grautöne für zusätzliche Textelemente */
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    color: white; /* Weiße Schrift für Dark Mode */
+    background-color: #333; /* Dunkler Hintergrund */
+}
+
+.dark-mode button, .dark-mode a.button {
+    background-color: #DD2038; /* Button Hintergrundfarbe bleibt gleich */
+    color: white; /* Button Schriftfarbe bleibt gleich */
+    border: none;
+    padding: 10px 20px; /* Beispielpolsterung für Buttons */
+    cursor: pointer;
+}
+
+.dark-mode .gray {
+    color: #747979; /* Grautöne bleiben gleich */
+}
+
+/* Logo */
+.logo {
+    display: block;
+    margin: 20px auto; /* Zentriert das Logo */
+    width: 150px; /* Beispielbreite für das Logo */
+}
+
+
+.login-container {
+    width: 100%;
+    max-width: 360px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.login-container .logo {
+    width: 150px;
+    margin: 0 auto 30px;
+}
+
+.login-container h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.login-container .form-group {
+    margin-bottom: 20px;
+}
+
+.login-container .form-group label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.login-container .form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-primary {
+    background-color: #DD2038;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.footer-text {
+    color: #747979;
+    font-size: 12px;
+    margin-top: 20px;
+}

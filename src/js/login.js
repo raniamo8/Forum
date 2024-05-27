@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Statische Zugangsdaten
         const credentials = {
-            admin: { username: 'admin@example.com', password: 'testadmin' },
-            user: { username: 'user@example.com', password: 'testuser' }
+            admin: { username: 'admin@deos-ag.com', password: 'testadmin' },
+            user: { username: 'user@deos-ag.com', password: 'testuser' }
         };
 
         // Prüfung der Anmeldedaten

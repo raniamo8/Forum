@@ -1,3 +1,4 @@
+// src/js/login.js
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('form');
 
@@ -16,10 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Prüfung der Anmeldedaten
         if (email === credentials.admin.username && password === credentials.admin.password) {
             alert('Admin erfolgreich angemeldet');
-            // Weiterleitung oder spezifische Logik für Admin
+            localStorage.setItem('userRole', 'admin');
+            window.location.href = 'src/html/pages/home.html'; // Weiterleitung zur Homepage
         } else if (email === credentials.user.username && password === credentials.user.password) {
             alert('User erfolgreich angemeldet');
-            // Weiterleitung oder spezifische Logik für User
+            localStorage.setItem('userRole', 'user');
+            window.location.href = '../../pages/home.html'; // Weiterleitung zur Homepage
         } else {
             alert('Falsche Anmeldedaten');
         }

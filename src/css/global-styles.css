@@ -1,55 +1,55 @@
-/* Global Styles */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap");
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     width: 100%;
-    max-width: 1200px; /* Beispielgröße für Inhalte */
+    max-width: 1200px;
     margin: auto;
 }
 
-/* Light Mode Styles */
 .light-mode {
-    color: black; /* Schwarze Schrift für Light Mode */
-    background-color: white; /* Hintergrundfarbe */
+    color: black;
+    background-color: white;
 }
 
 .light-mode button, .light-mode a.button {
-    background-color: #DD2038; /* Button Hintergrundfarbe */
-    color: white; /* Button Schriftfarbe */
+    background-color: #DD2038;
+    color: white;
     border: none;
-    padding: 10px 20px; /* Beispielpolsterung für Buttons */
+    padding: 10px 20px;
     cursor: pointer;
 }
 
 .light-mode .gray {
-    color: #747979; /* Grautöne für zusätzliche Textelemente */
+    color: #747979;
 }
 
-/* Dark Mode Styles */
+
 .dark-mode {
-    color: white; /* Weiße Schrift für Dark Mode */
-    background-color: #333; /* Dunkler Hintergrund */
+    color: white;
+    background-color: #333;
 }
 
 .dark-mode button, .dark-mode a.button {
-    background-color: #DD2038; /* Button Hintergrundfarbe bleibt gleich */
-    color: white; /* Button Schriftfarbe bleibt gleich */
+    background-color: #DD2038;
+    color: white;
     border: none;
-    padding: 10px 20px; /* Beispielpolsterung für Buttons */
+    padding: 10px 20px;
     cursor: pointer;
 }
 
 .dark-mode .gray {
-    color: #747979; /* Grautöne bleiben gleich */
+    color: #747979;
 }
 
-/* Logo */
+
 .logo {
     display: block;
-    margin: 20px auto; /* Zentriert das Logo */
-    width: 150px; /* Beispielbreite für das Logo */
+    margin: 20px auto;
+    width: 150px;
 }
 
 
@@ -125,14 +125,7 @@ body {
 }
 
 .navbar .logo {
-    width: 150px; /* Größe des Logos anpassen */
-}
-
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    width: 150px;
 }
 
 h1 {
@@ -170,4 +163,123 @@ h1 {
 .latest-posts #posts p {
     text-align: center;
     color: #747979;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --whiteColor: #ffffff;
+    --lightWhiteColor: #f0f3f5;
+    --darkRedColor: #a52e2d;
+    --lightGrayColor: #f0f3f5;
+    --mediumGray: #c9cdcf;
+    --darkGrayColor: #686c6e;
+    --lightBlackColor: #383a3b;
+    --fs14: 1.4rem;
+    --fs18: 1.8rem;
+    --fs24: 2.4rem;
+    --transition: all 0.3s ease;
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    background-color: var(--whiteColor);
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: var(--darkRedColor);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+input:focus::placeholder {
+    opacity: 0;
+}
+
+.btn {
+    padding: 0.7rem 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-size: var(--fs14);
+    font-weight: 500;
+    text-align: center;
+    height: 3.6rem;
+}
+
+.btn:hover {
+    text-decoration: none;
+}
+
+.btn-red {
+    background-color: var(--darkRedColor);
+    border: 0.1rem solid var(--darkRedColor);
+    color: var(--whiteColor);
+}
+
+.btn-red:hover {
+    background-color: #cd4342;
+}
+
+.btn-white {
+    border: 0.2rem solid var(--mediumGray);
+    color: var(--darkGrayColor);
+}
+
+.btn-white:hover {
+    border-color: #686c6e;
+}
+
+main {
+    padding: 12rem 0.5rem 2rem 0.5rem;
+    background-color: var(--lightWhiteColor);
+}
+
+@media (min-width: 768px) {
+    main {
+        padding-top: 1rem;
+    }
+}
+
+.container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+@media (min-width: 1300px) and (max-width: 1599px) {
+    .container {
+        width: 1200px;
+    }
 }

@@ -1,39 +1,90 @@
+<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/global-styles.css">
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/footer.css">
     <link rel="stylesheet" href="../../css/home.css">
-    <title>Home | DEOS Community Forum</title>
+    <title>DEOS Community Forum</title>
 </head>
 <body>
-<!-- Header -->
-<div id="header-placeholder"></div>
-
-<!-- Content -->
-<div class="container">
-    <h1>Willkommen!</h1>
-    <div class="search">
-        <input type="text" id="search" placeholder="Suchen">
-    </div>
-    <div class="latest-posts">
-        <h2>Aktuelle Beiträge</h2>
-        <div id="posts">
-            <p>Keine aktuellen Beiträge</p>
+<header class="header" id="header">
+    <div class="row">
+        <div class="container">
+            <div class ="header-content">
+                <div class="logotest">
+                    <a href="home.html">
+                        <img src="../../assets/images/deos-logo.png" alt="DEOS Logo" class="logo"/>
+                    </a>
+                </div>
+                <div class="nav-search">
+                    <div class="form-group">
+                        <label>
+                            <input type="text" placeholder="Suche">
+                        </label>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                </div>
+                <div class="nav-group">
+                    <ul>
+                        <li>
+                            <a href="#"><i class="fa-solid fa-comment"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa-solid fa-list-ul"></i></a>
+                        </li>
+                        <li>
+                            <a href="join">
+                                <i class="fa-solid fa-user"></i>
+                                <span>Login</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="top-posts">
-        <h2>Top 3 Wünsche</h2>
-        <ol>
-            <li>DEOS Community Platform</li>
-            <li>DEOS OnSite Release</li>
-            <li>Produkt X Neues Feature</li>
-        </ol>
-    </div>
-</div>
+    <div id="header-placeholder"></div>
+</header>
 
-<script src="../../js/main.js"></script>
+
+<main>
+    <div class="container">
+        <div class="post-header">
+            <h2>Letzte Beiträge</h2>
+            <button id="create-post-btn" class="btn btn-primary small-btn">Post erstellen</button>
+        </div>
+        <div id="post-creation-form" class="hidden">
+            <textarea id="post-content" placeholder="Schreibe hier deinen Post..."></textarea>
+            <button id="submit-post-btn" class="btn btn-primary">Posten</button>
+        </div>
+        <div id="posts-container">
+            <!-- Hier werden die Posts angezeigt -->
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Hilfe</a></li>
+        </ul>
+    </div>
+</footer>
+
+<script
+        src="https://kit.fontawesome.com/9e5ba2e3f5.js"
+        crossorigin="anonymous"
+></script>
 <script src="../../js/home.js"></script>
 </body>
 
+</html>

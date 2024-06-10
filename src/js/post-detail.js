@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitCommentBtn = document.getElementById('submit-comment-btn');
     const commentsContainer = document.getElementById('comments-container');
     const currentUser = localStorage.getItem('username'); // Benutzernamen laden
+    let editCommentForm = null;
 
     if (currentPost) {
         renderPostDetails(currentPost);
@@ -119,8 +120,12 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>${comment.content}</p>
             <p class="comment-author">Autor: ${comment.author}</p>
             <p class="comment-date">Datum: ${comment.date}</p>
+            <button class="edit-comment-btn btn btn-primary small-btn">Bearbeiten</button>
             <button class="delete-comment-btn btn btn-danger small-btn">Löschen</button>
         `;
+        commentElement.querySelector('.edit-comment-btn').addEventListener('click', function() {
+            editComment(comment, commentElement);
+        });
         commentElement.querySelector('.delete-comment-btn').addEventListener('click', function() {
             deleteComment(comment);
         });
@@ -135,6 +140,32 @@ document.addEventListener('DOMContentLoaded', function() {
             currentPost.comments.forEach(renderComment); // Re-render all comments
             console.log('Comment deleted', comment); // Debugging-Log
         }
+    }
+
+    function editComment(comment, commentElement) {
+        console.log('Edit Comment Button geklickt', comment); // Debugging-Log
+        const editForm = document.createElement('div');
+        editForm.className = 'comment-edit-form';
+        editForm.innerHTML = `
+            <textarea class="edit-comment-content">${comment.content}</textarea>
+            <button class="save-comment-btn btn btn-primary small-btn">Speichern</button>
+        `;
+        commentElement.appendChild(editForm);
+        const saveCommentBtn = editForm.querySelector('.save-comment-btn');
+        saveCommentBtn.addEventListener('click', function() {
+            const newContent = editForm.querySelector('.edit-comment-content').value;
+            if (newContent.trim() !== "") {
+                comment.content = newContent;
+                comment.date = new Date().toLocaleString(); // Update the date
+                localStorage.setItem('currentPost', JSON.stringify(currentPost)); // Aktualisieren des aktuellen Posts im localStorage
+                commentsContainer.innerHTML = ''; // Clear the comments container
+                currentPost.comments.forEach(renderComment); // Re-render all comments
+                console.log('Comment edited', comment); // Debugging-Log
+            } else {
+                alert("Kommentar darf nicht leer sein.");
+                console.log('Comment content empty'); // Debugging-Log
+            }
+        });
     }
 
     function toggleLikePost(post) {

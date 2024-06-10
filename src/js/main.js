@@ -2,7 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Header laden
-    loadComponent('header', '../html/components/header.html', 'header-placeholder');
 
     // Überprüfen, ob der Benutzer angemeldet ist
     checkLoginStatus();

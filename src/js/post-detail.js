@@ -28,12 +28,17 @@ document.addEventListener('DOMContentLoaded', function() {
             ${post.attachments.length > 0 ? renderAttachments(post.attachments) : ''}
             <button id="edit-post-btn" class="btn btn-primary small-btn">Bearbeiten</button>
             <button id="delete-post-btn" class="btn btn-danger small-btn">Löschen</button>
+            <button id="like-button" class="btn btn-primary small-btn">${hasUserLikedPost(post) ? 'Unlike' : 'Like'}</button>
+            <span id="like-count">${post.likes ? post.likes.length : 0}</span>
         `;
         document.getElementById('edit-post-btn').addEventListener('click', function() {
             editPost(post);
         });
         document.getElementById('delete-post-btn').addEventListener('click', function() {
             deletePost(post.id);
+        });
+        document.getElementById('like-button').addEventListener('click', function() {
+            toggleLikePost(post);
         });
     }
 
@@ -130,5 +135,30 @@ document.addEventListener('DOMContentLoaded', function() {
             currentPost.comments.forEach(renderComment); // Re-render all comments
             console.log('Comment deleted', comment); // Debugging-Log
         }
+    }
+
+    function toggleLikePost(post) {
+        if (!post.likes) {
+            post.likes = [];
+        }
+
+        const userIndex = post.likes.indexOf(currentUser);
+        if (userIndex === -1) {
+            post.likes.push(currentUser);
+        } else {
+            post.likes.splice(userIndex, 1);
+        }
+
+        localStorage.setItem('currentPost', JSON.stringify(post)); // Aktualisieren des aktuellen Posts im localStorage
+        document.getElementById('like-count').textContent = post.likes.length;
+        document.getElementById('like-button').textContent = userIndex === -1 ? 'Unlike' : 'Like';
+        console.log('Post liked/unliked', post); // Debugging-Log
+    }
+
+    function hasUserLikedPost(post) {
+        if (!post.likes) {
+            post.likes = [];
+        }
+        return post.likes.includes(currentUser);
     }
 });

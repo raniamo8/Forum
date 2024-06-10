@@ -1,3 +1,4 @@
+<!-- src/html/pages/post-detail.html -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -65,7 +66,13 @@
             <button id="save-edit-btn" class="btn btn-primary small-btn">Speichern</button>
         </div>
         <div id="comments-section">
-            <!-- Hier werden die Kommentare angezeigt -->
+            <!-- Kommentar-Formular -->
+            <h3>Kommentare</h3>
+            <textarea id="comment-content" placeholder="Schreibe einen Kommentar..."></textarea>
+            <button id="submit-comment-btn" class="btn btn-primary small-btn">Kommentieren</button>
+            <div id="comments-container">
+                <!-- Hier werden die Kommentare angezeigt -->
+            </div>
         </div>
     </div>
 </main>

@@ -1,0 +1,60 @@
+/* src/css/post-detail.css */
+#post-editing-form,
+#comment-content {
+    margin-top: 20px;
+}
+
+#comment-content {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+    margin-bottom: 10px;
+}
+
+#submit-comment-btn {
+    margin-top: 10px;
+}
+
+.comment {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.comment p {
+    margin: 0;
+}
+
+.comment .comment-author,
+.comment .comment-date {
+    font-size: 12px;
+    color: #777;
+}
+
+#like-button {
+    display: inline-block;
+    background-color: #DD2038;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+#like-button:hover {
+    background-color: #b51a2c;
+}
+
+#like-count {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 16px;
+    color: #555;
+}

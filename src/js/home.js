@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const postAttachment = document.getElementById('post-attachment');
     const postTitle = document.getElementById('post-title');
     const currentUser = localStorage.getItem('username'); // Benutzernamen laden
-    let posts = []; // Array zum Speichern von Posts
+    let posts = JSON.parse(localStorage.getItem('posts')) || []; // Array zum Speichern von Posts
 
     createPostBtn.addEventListener('click', function() {
         console.log('Post erstellen Button geklickt'); // Debugging-Log
@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 attachments: Array.from(attachments),
             };
             posts.push(post);
+            localStorage.setItem('posts', JSON.stringify(posts)); // Speichern der Posts im localStorage
             renderPost(post);
             document.getElementById('post-content').value = ""; // Clear the textarea
             postTitle.value = ""; // Clear the title input
@@ -61,4 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         postsContainer.appendChild(postElement);
     }
+
+    // Render existing posts on page load
+    posts.forEach(renderPost);
 });

@@ -20,12 +20,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchTerm = searchInput.value.toLowerCase();
         console.log('Suchbegriff:', searchTerm);
         filterPosts(searchTerm);
+
+        // Dynamische Anpassung der Größe und Position des Dropdowns
+        searchResults.style.width = `${searchInput.offsetWidth}px`;
+        searchResults.style.left = `${searchInput.getBoundingClientRect().left}px`;
+        searchResults.style.top = `${searchInput.getBoundingClientRect().bottom}px`;
     });
 
     function filterPosts(searchTerm) {
         const posts = postsContainer.getElementsByClassName('post');
         if (posts.length === 0) {
             console.warn('Keine Posts gefunden');
+            searchResults.innerHTML = ''; // Clear previous search results if no posts found
             return;
         }
 
@@ -56,13 +62,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultItem.className = 'result-item';
                 resultItem.innerText = titleElement.innerText;
                 resultItem.addEventListener('click', function() {
-                    post.style.display = 'block';
-                    contentElement.style.display = 'none';
-                    window.location.href = `/Forum/src/html/pages/post-detail.html?id=${post.id}`;
+                    console.log('Suchergebnis angeklickt:', post);
+                    localStorage.setItem('currentPost', JSON.stringify(post)); // Speichern des aktuellen Posts
+                    window.location.href = '/Forum/src/html/pages/post-detail.html';
                 });
                 searchResults.appendChild(resultItem);
                 console.log('Suchergebnis hinzugefügt:', resultItem);
             }
+        }
+
+        if (searchResults.innerHTML === '') {
+            searchResults.style.display = 'none'; // Dropdown-Menü ausblenden, wenn keine Ergebnisse gefunden wurden
+        } else {
+            searchResults.style.display = 'block'; // Dropdown-Menü anzeigen, wenn Ergebnisse gefunden wurden
+        }
+
+        if (searchTerm === '') {
+            searchResults.style.display = 'none'; // Dropdown-Menü ausblenden, wenn der Suchbegriff gelöscht wird
         }
     }
 });

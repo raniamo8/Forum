@@ -284,6 +284,10 @@ main {
     }
 }
 
+.search-wrapper {
+    position: relative;
+}
+
 .search-results {
     position: absolute;
     background: white;
@@ -293,6 +297,8 @@ main {
     max-height: 200px;
     overflow-y: auto;
     z-index: 1000;
+    width: 100%;
+    top: 100%; /* Direkt unter der Suchleiste platzieren */
 }
 
 .search-results .result-item {

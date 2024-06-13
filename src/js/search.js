@@ -20,11 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchTerm = searchInput.value.toLowerCase();
         console.log('Suchbegriff:', searchTerm);
         filterPosts(searchTerm);
-
-        // Dynamische Anpassung der Größe und Position des Dropdowns
-        searchResults.style.width = `${searchInput.offsetWidth}px`;
-        searchResults.style.left = `${searchInput.getBoundingClientRect().left}px`;
-        searchResults.style.top = `${searchInput.getBoundingClientRect().bottom}px`;
     });
 
     function filterPosts(searchTerm) {

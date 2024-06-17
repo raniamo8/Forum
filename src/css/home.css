@@ -11,14 +11,20 @@
     font-size: 24px;
 }
 
+.post-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 20px;
+}
+
 .small-btn {
     font-size: 14px;
     padding: 5px 10px;
 }
 
-
 #post-creation-form,
-#post-editing-form {
+#post-editing-form,
+#announcement-creation-form {
     display: none;
     background-color: #f9f9f9;
     padding: 10px;
@@ -33,7 +39,10 @@
 #post-creation-form input[type="file"],
 #post-editing-form input[type="text"],
 #post-editing-form textarea,
-#post-editing-form input[type="file"] {
+#post-editing-form input[type="file"],
+#announcement-creation-form input[type="text"],
+#announcement-creation-form textarea,
+#announcement-creation-form input[type="file"] {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -44,7 +53,8 @@
 }
 
 #post-creation-form button,
-#post-editing-form button {
+#post-editing-form button,
+#announcement-creation-form button {
     display: block;
     width: 100%;
     padding: 10px;
@@ -57,7 +67,8 @@
 }
 
 #post-creation-form button:hover,
-#post-editing-form button:hover {
+#post-editing-form button:hover,
+#announcement-creation-form button:hover {
     background-color: #b51a2c;
 }
 
@@ -115,7 +126,6 @@
 .post .dropdown-content a:hover {
     background-color: #ddd;
 }
-
 
 body, html {
     height: 100%;

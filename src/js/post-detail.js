@@ -1,4 +1,3 @@
-// src/js/post-detail.js
 document.addEventListener('DOMContentLoaded', function() {
     const postDetailsContainer = document.getElementById('post-details');
     const editPostForm = document.getElementById('post-editing-form');
@@ -27,10 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>Autor: ${post.author}</p>
             <p id="post-date">Datum: ${post.date}</p>
             ${post.attachments.length > 0 ? renderAttachments(post.attachments) : ''}
-            <button id="edit-post-btn" class="btn btn-primary small-btn">Bearbeiten</button>
-            <button id="delete-post-btn" class="btn btn-danger small-btn">Löschen</button>
-            <button id="like-button" class="btn btn-primary small-btn">${hasUserLikedPost(post) ? 'Unlike' : 'Like'}</button>
-            <span id="like-count">${post.likes ? post.likes.length : 0}</span>
+            <div class="post-actions">
+                <i class="fa-solid fa-pen-to-square" id="edit-post-btn"></i>
+                <i class="fa-solid fa-trash-can" id="delete-post-btn"></i>
+                <i class="fa-solid fa-thumbs-up" id="like-button"></i>
+                <span id="like-count">${post.likes ? post.likes.length : 0}</span>
+                <i class="fa-solid fa-comment" id="comment-post-btn"></i>
+            </div>
         `;
         document.getElementById('edit-post-btn').addEventListener('click', function() {
             editPost(post);
@@ -40,6 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         document.getElementById('like-button').addEventListener('click', function() {
             toggleLikePost(post);
+        });
+        document.getElementById('comment-post-btn').addEventListener('click', function() {
+            toggleCommentForm();
         });
     }
 
@@ -106,6 +111,8 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('currentPost', JSON.stringify(currentPost)); // Aktualisieren des aktuellen Posts im localStorage
             renderComment(comment);
             commentContent.value = ""; // Clear the textarea
+            commentContent.style.display = 'none'; // Kommentarformular ausblenden
+            submitCommentBtn.style.display = 'none'; // Kommentar-Button ausblenden
             console.log('Comment added', comment); // Debugging-Log
         } else {
             alert("Kommentar darf nicht leer sein.");
@@ -120,8 +127,10 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>${comment.content}</p>
             <p class="comment-author">Autor: ${comment.author}</p>
             <p class="comment-date">Datum: ${comment.date}</p>
-            <button class="edit-comment-btn btn btn-primary small-btn">Bearbeiten</button>
-            <button class="delete-comment-btn btn btn-danger small-btn">Löschen</button>
+            <div class="comment-actions">
+                <i class="fa-solid fa-pen-to-square edit-comment-btn"></i>
+                <i class="fa-solid fa-trash-can delete-comment-btn"></i>
+            </div>
         `;
         commentElement.querySelector('.edit-comment-btn').addEventListener('click', function() {
             editComment(comment, commentElement);
@@ -182,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         localStorage.setItem('currentPost', JSON.stringify(post)); // Aktualisieren des aktuellen Posts im localStorage
         document.getElementById('like-count').textContent = post.likes.length;
-        document.getElementById('like-button').textContent = userIndex === -1 ? 'Unlike' : 'Like';
+        document.getElementById('like-button').className = userIndex === -1 ? 'fa-solid fa-thumbs-up liked' : 'fa-solid fa-thumbs-up';
         console.log('Post liked/unliked', post); // Debugging-Log
     }
 
@@ -191,5 +200,11 @@ document.addEventListener('DOMContentLoaded', function() {
             post.likes = [];
         }
         return post.likes.includes(currentUser);
+    }
+
+    function toggleCommentForm() {
+        const isVisible = commentContent.style.display === 'block';
+        commentContent.style.display = isVisible ? 'none' : 'block';
+        submitCommentBtn.style.display = isVisible ? 'none' : 'block';
     }
 });

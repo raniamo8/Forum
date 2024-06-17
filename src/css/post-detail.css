@@ -37,19 +37,9 @@
 }
 
 #like-button {
-    display: inline-block;
-    background-color: #DD2038;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
+    color: #DD2038;
+    font-size: 24px;
     cursor: pointer;
-    border-radius: 4px;
-    margin-top: 10px;
-}
-
-#like-button:hover {
-    background-color: #b51a2c;
 }
 
 #like-count {
@@ -57,4 +47,29 @@
     margin-left: 10px;
     font-size: 16px;
     color: #555;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    color: #DD2038;
+}
+
+.post-actions i {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.comment-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    color: #DD2038;
+    margin-top: 10px;
+}
+
+.comment-actions i {
+    font-size: 24px;
+    cursor: pointer;
 }

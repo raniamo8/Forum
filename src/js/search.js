@@ -9,12 +9,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    if (!postsContainer) {
-        console.error('Posts-Container nicht gefunden');
+    if (!searchResults) {
+        console.error('Suchergebnisse-Container nicht gefunden');
         return;
     }
 
-    console.log('Suchleiste und Posts-Container gefunden');
+    console.log('Suchleiste und Suchergebnisse-Container gefunden');
+
+    if (!postsContainer) {
+        console.warn('Posts-Container nicht gefunden. Verwende localStorage für die Suchfunktion.');
+    } else {
+        console.log('Posts-Container gefunden');
+    }
 
     searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.toLowerCase();
@@ -23,7 +29,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function filterPosts(searchTerm) {
-        const posts = postsContainer.getElementsByClassName('post');
+        let posts = [];
+
+        if (postsContainer) {
+            posts = Array.from(postsContainer.getElementsByClassName('post'));
+        } else {
+            const storedPosts = localStorage.getItem('allPosts');
+            if (storedPosts) {
+                posts = JSON.parse(storedPosts);
+            }
+        }
+
         if (posts.length === 0) {
             console.warn('Keine Posts gefunden');
             searchResults.innerHTML = ''; // Clear previous search results if no posts found
@@ -33,38 +49,51 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Anzahl der Posts:', posts.length);
         searchResults.innerHTML = ''; // Clear previous search results
 
-        for (let post of posts) {
-            const titleElement = post.querySelector('.post-title');
-            const contentElement = post.querySelector('.post-details');
+        posts.forEach(post => {
+            let title = '';
+            let content = '';
 
-            if (!titleElement) {
-                console.error('Post-Titel nicht gefunden', post);
-                continue;
+            if (postsContainer) {
+                const titleElement = post.querySelector('.post-title');
+                const contentElement = post.querySelector('.post-details');
+
+                if (!titleElement) {
+                    console.error('Post-Titel nicht gefunden', post);
+                    return;
+                }
+
+                if (!contentElement) {
+                    console.error('Post-Inhalt nicht gefunden', post);
+                    return;
+                }
+
+                title = titleElement.innerText.toLowerCase();
+                content = contentElement.innerText.toLowerCase();
+            } else {
+                title = post.title.toLowerCase();
+                content = post.content.toLowerCase();
             }
 
-            if (!contentElement) {
-                console.error('Post-Inhalt nicht gefunden', post);
-                continue;
-            }
-
-            const title = titleElement.innerText.toLowerCase();
-            const content = contentElement.innerText.toLowerCase();
             console.log('Post-Titel:', title);
             console.log('Post-Inhalt:', content);
 
             if (title.includes(searchTerm) || content.includes(searchTerm)) {
                 const resultItem = document.createElement('div');
                 resultItem.className = 'result-item';
-                resultItem.innerText = titleElement.innerText;
+                resultItem.innerText = title.charAt(0).toUpperCase() + title.slice(1);
                 resultItem.addEventListener('click', function() {
-                    console.log('Suchergebnis angeklickt:', post);
-                    localStorage.setItem('currentPost', JSON.stringify(post)); // Speichern des aktuellen Posts
-                    window.location.href = '/Forum/src/html/pages/post-detail.html';
+                    console.log('Suchergebnis angeklickt:', title); // Debugging-Log
+                    if (postsContainer) {
+                        post.click(); // Simulate click on the post to trigger the same logic
+                    } else {
+                        localStorage.setItem('currentPost', JSON.stringify(post)); // Speichern des aktuellen Posts
+                        window.location.href = '/Forum/src/html/pages/post-detail.html';
+                    }
                 });
                 searchResults.appendChild(resultItem);
                 console.log('Suchergebnis hinzugefügt:', resultItem);
             }
-        }
+        });
 
         if (searchResults.innerHTML === '') {
             searchResults.style.display = 'none'; // Dropdown-Menü ausblenden, wenn keine Ergebnisse gefunden wurden
@@ -76,4 +105,22 @@ document.addEventListener('DOMContentLoaded', function() {
             searchResults.style.display = 'none'; // Dropdown-Menü ausblenden, wenn der Suchbegriff gelöscht wird
         }
     }
+
+    // Klick außerhalb des Suchfelds und der Dropdown-Liste
+    document.addEventListener('click', function(event) {
+        const isClickInside = searchInput.contains(event.target) || searchResults.contains(event.target);
+        if (!isClickInside) {
+            searchResults.style.display = 'none';
+            searchInput.value = '';
+            console.log('Klick außerhalb des Suchfelds und der Dropdown-Liste, Dropdown geschlossen und Suchfeld geleert');
+        }
+    });
+
+    // Verhindern, dass der Klick innerhalb des Suchfelds und der Dropdown-Liste das Dropdown schließt
+    searchInput.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+    searchResults.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
 });

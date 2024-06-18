@@ -6,6 +6,7 @@
 //TODO: Post container farbe als blau und Cursor Form Änderung
 //TODO: Mehr Details auf der Homepage bei den Posts
 //TODO: Ankündigung Funktion bei user und admin unterscheiden
+//TODO: Logout Funktion implementieren
 //TODO: Main als Startpunkt für den Server
 //TODO: Funktion Beitrag als abgeschlossen
 //TODO: Medien hochladen, bearbeiten, löschen, anklicken und downloaden

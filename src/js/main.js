@@ -1,3 +1,4 @@
+//TODO: Header Heigt rausnehmen + alle Padding rausnehmen
 //TODO: Kommentar Bug, wenn zweimal geklickt wird
 //TODO: Löschfunktion Bug bei Posts
 //TODO: Logik von der Anordung von den Posts nachhacken

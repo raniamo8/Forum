@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    /**
+     * Render Post function
+     * @param post
+     */
     function renderPostDetails(post) {
         postDetailsContainer.innerHTML = `
             <h2>${post.title}</h2>

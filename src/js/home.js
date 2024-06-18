@@ -1,3 +1,6 @@
+/**
+ * JS doc test
+ */
 document.addEventListener('DOMContentLoaded', function() {
     const createPostBtn = document.getElementById('create-post-btn');
     const postCreationForm = document.getElementById('post-creation-form');

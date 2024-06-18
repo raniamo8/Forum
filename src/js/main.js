@@ -1,4 +1,16 @@
-// src/js/main.js
+//TODO: Kommentar Bug, wenn zweimal geklickt wird
+//TODO: Löschfunktion Bug bei Posts
+//TODO: Logik von der Anordung von den Posts nachhacken
+//TODO: Post form Schrift vereinheitlichen
+//TODO: Post container farbe als blau und Cursor Form Änderung
+//TODO: Mehr Details auf der Homepage bei den Posts
+//TODO: Ankündigung Funktion bei user und admin unterscheiden
+//TODO: Main als Startpunkt für den Server
+//TODO: Funktion Beitrag als abgeschlossen
+//TODO: Medien hochladen, bearbeiten, löschen, anklicken und downloaden
+//TODO: Tag und Category
+//TODO: jest
+//TODO: Sind Automatische UI Tests für JavaScript möglich?
 
 document.addEventListener('DOMContentLoaded', function() {
     // Header laden

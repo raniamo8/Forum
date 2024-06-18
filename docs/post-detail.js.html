@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: post-detail.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: post-detail.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @file Manages the display and interaction with post details, including editing, deleting, liking, and commenting on posts.
  */
 
@@ -29,18 +57,18 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function renderPostDetails(post) {
         postDetailsContainer.innerHTML = `
-            <h2>${post.title}</h2>
-            <p>${post.content}</p>
-            <p>Autor: ${post.author}</p>
-            <p id="post-date">Datum: ${post.date}</p>
+            &lt;h2>${post.title}&lt;/h2>
+            &lt;p>${post.content}&lt;/p>
+            &lt;p>Autor: ${post.author}&lt;/p>
+            &lt;p id="post-date">Datum: ${post.date}&lt;/p>
             ${post.attachments.length > 0 ? renderAttachments(post.attachments) : ''}
-            <div class="post-actions">
-                <i class="fa-solid fa-pen-to-square" id="edit-post-btn"></i>
-                <i class="fa-solid fa-trash-can" id="delete-post-btn"></i>
-                <i class="fa-solid fa-thumbs-up" id="like-button"></i>
-                <span id="like-count">${post.likes ? post.likes.length : 0}</span>
-                <i class="fa-solid fa-comment" id="comment-post-btn"></i>
-            </div>
+            &lt;div class="post-actions">
+                &lt;i class="fa-solid fa-pen-to-square" id="edit-post-btn">&lt;/i>
+                &lt;i class="fa-solid fa-trash-can" id="delete-post-btn">&lt;/i>
+                &lt;i class="fa-solid fa-thumbs-up" id="like-button">&lt;/i>
+                &lt;span id="like-count">${post.likes ? post.likes.length : 0}&lt;/span>
+                &lt;i class="fa-solid fa-comment" id="comment-post-btn">&lt;/i>
+            &lt;/div>
         `;
         document.getElementById('edit-post-btn').addEventListener('click', function() {
             editPost(post);
@@ -63,9 +91,9 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function renderAttachments(attachments) {
         return `
-            <ul>
-                ${attachments.map(attachment => `<li>${attachment.name}</li>`).join('')}
-            </ul>
+            &lt;ul>
+                ${attachments.map(attachment => `&lt;li>${attachment.name}&lt;/li>`).join('')}
+            &lt;/ul>
         `;
     }
 
@@ -88,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const newContent = editPostContent.value;
         const newAttachments = editPostAttachment.files;
         const newDate = new Date().toLocaleString();
-        if (newTitle.trim() !== "" && newContent.trim() !== "") {
+        if (newTitle.trim() !== "" &amp;&amp; newContent.trim() !== "") {
             currentPost.title = newTitle;
             currentPost.content = newContent;
             currentPost.date = newDate; // Update the date
@@ -149,13 +177,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const commentElement = document.createElement('div');
         commentElement.className = 'comment';
         commentElement.innerHTML = `
-            <p>${comment.content}</p>
-            <p class="comment-author">Autor: ${comment.author}</p>
-            <p class="comment-date">Datum: ${comment.date}</p>
-            <div class="comment-actions">
-                <i class="fa-solid fa-pen-to-square edit-comment-btn"></i>
-                <i class="fa-solid fa-trash-can delete-comment-btn"></i>
-            </div>
+            &lt;p>${comment.content}&lt;/p>
+            &lt;p class="comment-author">Autor: ${comment.author}&lt;/p>
+            &lt;p class="comment-date">Datum: ${comment.date}&lt;/p>
+            &lt;div class="comment-actions">
+                &lt;i class="fa-solid fa-pen-to-square edit-comment-btn">&lt;/i>
+                &lt;i class="fa-solid fa-trash-can delete-comment-btn">&lt;/i>
+            &lt;/div>
         `;
         commentElement.querySelector('.edit-comment-btn').addEventListener('click', function() {
             editComment(comment, commentElement);
@@ -188,8 +216,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const editForm = document.createElement('div');
         editForm.className = 'comment-edit-form';
         editForm.innerHTML = `
-            <textarea class="edit-comment-content">${comment.content}</textarea>
-            <button class="save-comment-btn btn btn-primary small-btn">Speichern</button>
+            &lt;textarea class="edit-comment-content">${comment.content}&lt;/textarea>
+            &lt;button class="save-comment-btn btn btn-primary small-btn">Speichern&lt;/button>
         `;
         commentElement.appendChild(editForm);
         const saveCommentBtn = editForm.querySelector('.save-comment-btn');
@@ -249,3 +277,26 @@ document.addEventListener('DOMContentLoaded', function() {
         submitCommentBtn.style.display = isVisible ? 'none' : 'block';
     }
 });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Tue Jun 18 2024 11:33:34 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

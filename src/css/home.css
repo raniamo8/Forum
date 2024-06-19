@@ -1,4 +1,3 @@
-/* src/css/home.css */
 .post-header {
     display: flex;
     justify-content: space-between;
@@ -31,7 +30,7 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     margin-bottom: 20px;
-    resize: none; /* Verhindert das Ändern der Größe */
+    resize: none;
 }
 
 #post-creation-form input[type="text"],

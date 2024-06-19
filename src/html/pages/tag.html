@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="../../css/header.css">
     <link rel="stylesheet" href="../../css/footer.css">
     <link rel="stylesheet" href="../../css/home.css">
-    <link rel="stylesheet" href="../../css/post-detail.css"> <!-- Neue CSS-Datei für spezifische Stile -->
-    <title>Post Details</title>
+    <title>DEOS Community Forum</title>
 </head>
 <body>
 <header class="header" id="header">
@@ -21,12 +20,12 @@
                     </a>
                 </div>
                 <div class="nav-search">
-                    <div class="form-group search-wrapper"> <!-- Umschließende div hinzugefügt -->
+                    <div class="form-group search-wrapper">
                         <label>
                             <input type="text" id="search-input" placeholder="Suche">
                         </label>
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <div id="search-results" class="search-results"></div> <!-- Suchergebnisse verschoben -->
+                        <div id="search-results" class="search-results"></div>
                     </div>
                 </div>
                 <div class="nav-group">
@@ -56,24 +55,7 @@
 
 <main>
     <div class="container">
-        <div id="post-details">
-            <!-- Hier werden die Post-Details angezeigt -->
-        </div>
-        <div id="post-editing-form" class="hidden">
-            <input type="text" id="edit-post-title" placeholder="Titel">
-            <textarea id="edit-post-content" placeholder="Schreibe hier deinen Post..."></textarea>
-            <input type="file" id="edit-post-attachment" multiple>
-            <button id="save-edit-btn" class="btn btn-primary small-btn">Speichern</button>
-        </div>
-        <div id="comments-section">
-            <!-- Kommentar-Formular -->
-            <h3>Kommentare</h3>
-            <textarea id="comment-content" class="hidden" placeholder="Schreibe einen Kommentar..."></textarea>
-            <button id="submit-comment-btn" class="btn btn-primary small-btn hidden">Kommentieren</button>
-            <div id="comments-container">
-                <!-- Hier werden die Kommentare angezeigt -->
-            </div>
-        </div>
+
     </div>
 </main>
 
@@ -89,9 +71,8 @@
 
 <script
         src="https://kit.fontawesome.com/9e5ba2e3f5.js"
-        crossorigin="anonymous"
-></script>
-<script src="../../js/post-detail.js"></script>
+        crossorigin="anonymous"></script>
+<script src="../../js/home.js"></script>
 <script src="../../js/search.js"></script>
 </body>
 </html>

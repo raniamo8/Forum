@@ -5,12 +5,14 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const createPostBtn = document.getElementById('create-post-btn');
+    const closePostFormBtn = document.getElementById('close-post-form');
     const postCreationForm = document.getElementById('post-creation-form');
     const submitPostBtn = document.getElementById('submit-post-btn');
     const postsContainer = document.getElementById('posts-container');
     const postAttachment = document.getElementById('post-attachment');
     const postTitle = document.getElementById('post-title');
     const createAnnouncementBtn = document.getElementById('create-announcement-btn');
+    const closeAnnouncementFormBtn = document.getElementById('close-announcement-form');
     const announcementCreationForm = document.getElementById('announcement-creation-form');
     const submitAnnouncementBtn = document.getElementById('submit-announcement-btn');
     const announcementTitle = document.getElementById('announcement-title');
@@ -29,10 +31,15 @@ document.addEventListener('DOMContentLoaded', function() {
      * Toggles the visibility of the post creation form.
      */
     createPostBtn.addEventListener('click', function() {
-        console.log('Post erstellen Button geklickt');
         postCreationForm.style.display = postCreationForm.style.display === 'none' || postCreationForm.style.display === '' ? 'block' : 'none';
         announcementCreationForm.style.display = 'none';
-        console.log('Form visibility toggled');
+    });
+
+    /**
+     * Closes the post creation form.
+     */
+    closePostFormBtn.addEventListener('click', function() {
+        postCreationForm.style.display = 'none';
     });
 
     /**
@@ -43,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const attachments = postAttachment.files;
         const title = postTitle.value;
         const date = new Date().toLocaleString();
-        console.log('Submit Post Button geklickt');
         if (title.trim() !== "" && postContent.trim() !== "") {
             const post = {
                 id: posts.length,
@@ -61,10 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
             postTitle.value = "";
             postAttachment.value = "";
             postCreationForm.style.display = 'none';
-            console.log('Post created', post);
         } else {
             alert("Titel und Inhalt dürfen nicht leer sein.");
-            console.log('Post content or title empty');
         }
     });
 
@@ -72,10 +76,15 @@ document.addEventListener('DOMContentLoaded', function() {
      * Toggles the visibility of the announcement creation form.
      */
     createAnnouncementBtn.addEventListener('click', function() {
-        console.log('Ankündigung erstellen Button geklickt');
         announcementCreationForm.style.display = announcementCreationForm.style.display === 'none' || announcementCreationForm.style.display === '' ? 'block' : 'none';
         postCreationForm.style.display = 'none';
-        console.log('Form visibility toggled');
+    });
+
+    /**
+     * Closes the announcement creation form.
+     */
+    closeAnnouncementFormBtn.addEventListener('click', function() {
+        announcementCreationForm.style.display = 'none';
     });
 
     /**
@@ -86,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const attachments = announcementAttachment.files;
         const title = announcementTitle.value;
         const date = new Date().toLocaleString();
-        console.log('Submit Announcement Button geklickt');
         if (title.trim() !== "" && content.trim() !== "") {
             const post = {
                 id: posts.length,
@@ -104,10 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
             announcementTitle.value = "";
             announcementAttachment.value = "";
             announcementCreationForm.style.display = 'none';
-            console.log('Announcement created', post);
         } else {
             alert("Titel und Inhalt dürfen nicht leer sein.");
-            console.log('Announcement content or title empty');
         }
     });
 
@@ -127,14 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
         postElement.className = 'post';
         postElement.innerHTML = `
             <p class="post-title">${post.title} ${post.isAnnouncement ? '<i class="fa-solid fa-bookmark"></i>' : ''}</p>
-            <div class="post-details">
-                <p>${post.content}</p>
-                <p>Autor: ${post.author}</p>
-                <p>Datum: ${post.date}</p>
-            </div>
+            <p class="post-meta">Autor: ${post.author} | Datum: ${post.date}</p>
         `;
         postElement.addEventListener('click', function() {
-            console.log('Post clicked', post);
             localStorage.setItem('currentPost', JSON.stringify(post));
             window.location.href = '/Forum/src/html/pages/post-detail.html';
         });
@@ -149,6 +150,9 @@ document.addEventListener('DOMContentLoaded', function() {
         posts.forEach(renderPost);
     }
 
+    /**
+     * Loads posts from localStorage and renders them.
+     */
     const storedPosts = localStorage.getItem('allPosts');
     if (storedPosts) {
         posts = JSON.parse(storedPosts);

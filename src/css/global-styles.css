@@ -260,7 +260,7 @@ input:focus::placeholder {
 }
 
 main {
-    padding: 12rem 0.5rem 2rem 0.5rem;
+    /*padding: 12rem 0.5rem 2rem 0.5rem;*/
     background-color: var(--lightWhiteColor);
 }
 

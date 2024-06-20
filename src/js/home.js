@@ -5,14 +5,14 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const createPostBtn = document.getElementById('create-post-btn');
-    const closePostFormBtn = document.getElementById('close-post-form');
+    const cancelPostBtn = document.getElementById('cancel-post-btn');
     const postCreationForm = document.getElementById('post-creation-form');
     const submitPostBtn = document.getElementById('submit-post-btn');
     const postsContainer = document.getElementById('posts-container');
     const postAttachment = document.getElementById('post-attachment');
     const postTitle = document.getElementById('post-title');
     const createAnnouncementBtn = document.getElementById('create-announcement-btn');
-    const closeAnnouncementFormBtn = document.getElementById('close-announcement-form');
+    const cancelAnnouncementBtn = document.getElementById('cancel-announcement-btn');
     const announcementCreationForm = document.getElementById('announcement-creation-form');
     const submitAnnouncementBtn = document.getElementById('submit-announcement-btn');
     const announcementTitle = document.getElementById('announcement-title');
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     /**
      * Closes the post creation form.
      */
-    closePostFormBtn.addEventListener('click', function() {
+    cancelPostBtn.addEventListener('click', function() {
         postCreationForm.style.display = 'none';
     });
 
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
     /**
      * Closes the announcement creation form.
      */
-    closeAnnouncementFormBtn.addEventListener('click', function() {
+    cancelAnnouncementBtn.addEventListener('click', function() {
         announcementCreationForm.style.display = 'none';
     });
 

@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const editPostTitle = document.getElementById('edit-post-title');
     const editPostContent = document.getElementById('edit-post-content');
     const editPostAttachment = document.getElementById('edit-post-attachment');
-    const currentPost = JSON.parse(localStorage.getItem('currentPost')); // Laden des aktuellen Posts
+    const currentPost = JSON.parse(localStorage.getItem('currentPost'));
     const commentContent = document.getElementById('comment-content');
     const submitCommentBtn = document.getElementById('submit-comment-btn');
     const commentsContainer = document.getElementById('comments-container');
-    const currentUser = localStorage.getItem('username'); // Benutzernamen laden
+    const currentUser = localStorage.getItem('username');
     let editCommentForm = null;
 
     if (currentPost) {
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (newTitle.trim() !== "" && newContent.trim() !== "") {
             currentPost.title = newTitle;
             currentPost.content = newContent;
-            currentPost.date = newDate; // Update the date
+            currentPost.date = newDate;
             if (newAttachments.length > 0) {
                 currentPost.attachments = Array.from(newAttachments);
             }
@@ -104,10 +104,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('allPosts', JSON.stringify(allPosts));
             }
 
-            localStorage.setItem('currentPost', JSON.stringify(currentPost)); // Aktualisieren des aktuellen Posts im localStorage
-            postDetailsContainer.innerHTML = ''; // Clear the post details container
-            renderPostDetails(currentPost); // Re-render the post details
-            editPostForm.style.display = 'none'; // Verstecke das Bearbeitungsformular
+            localStorage.setItem('currentPost', JSON.stringify(currentPost));
+            postDetailsContainer.innerHTML = '';
+            renderPostDetails(currentPost);
+            editPostForm.style.display = 'none';
         } else {
             alert("Titel und Inhalt dürfen nicht leer sein.");
         }
@@ -145,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
             currentPost.comments.push(comment);
 
             // Update the post in the allPosts array in localStorage
+            //TODO:refactor?
             const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
             const postIndex = allPosts.findIndex(post => post.id === currentPost.id);
             if (postIndex !== -1) {
@@ -152,11 +153,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('allPosts', JSON.stringify(allPosts));
             }
 
-            localStorage.setItem('currentPost', JSON.stringify(currentPost)); // Aktualisieren des aktuellen Posts im localStorage
+            localStorage.setItem('currentPost', JSON.stringify(currentPost));
             renderComment(comment);
-            commentContent.value = ""; // Clear the textarea
-            commentContent.style.display = 'none'; // Kommentarformular ausblenden
-            submitCommentBtn.style.display = 'none'; // Kommentar-Button ausblenden
+            commentContent.value = "";
+            commentContent.style.display = 'none';
+            submitCommentBtn.style.display = 'none';
         } else {
             alert("Kommentar darf nicht leer sein.");
         }
@@ -178,9 +179,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('allPosts', JSON.stringify(allPosts));
             }
 
-            localStorage.setItem('currentPost', JSON.stringify(currentPost)); // Aktualisieren des aktuellen Posts im localStorage
-            commentsContainer.innerHTML = ''; // Clear the comments container
-            currentPost.comments.forEach(renderComment); // Re-render all comments
+            localStorage.setItem('currentPost', JSON.stringify(currentPost));
+            commentsContainer.innerHTML = '';
+            currentPost.comments.forEach(renderComment);
         }
     }
 
@@ -244,9 +245,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     localStorage.setItem('allPosts', JSON.stringify(allPosts));
                 }
 
-                localStorage.setItem('currentPost', JSON.stringify(currentPost)); // Aktualisieren des aktuellen Posts im localStorage
-                commentsContainer.innerHTML = ''; // Clear the comments container
-                currentPost.comments.forEach(renderComment); // Re-render all comments
+                localStorage.setItem('currentPost', JSON.stringify(currentPost));
+                commentsContainer.innerHTML = '';
+                currentPost.comments.forEach(renderComment);
                 editCommentForm = null;
             } else {
                 alert("Kommentar darf nicht leer sein.");
@@ -270,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
             post.likes.splice(userIndex, 1);
         }
 
-        localStorage.setItem('currentPost', JSON.stringify(post)); // Aktualisieren des aktuellen Posts im localStorage
+        localStorage.setItem('currentPost', JSON.stringify(post));
         document.getElementById('like-count').textContent = post.likes.length;
         document.getElementById('like-button').className = userIndex === -1 ? 'fa-solid fa-thumbs-up liked' : 'fa-solid fa-thumbs-up';
     }

@@ -155,7 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderPosts() {
         postsContainer.innerHTML = '';
         posts
-            .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort posts by date in descending order
+            // descending order
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
             .forEach(renderPost);
     }
 

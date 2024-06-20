@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <h2>${post.title}</h2>
             <p>${post.content}</p>
             <p>Autor: ${post.author}</p>
-            <p id="post-date">Datum: ${post.date}</p>
+            <p id="post-date">Datum: ${new Date(post.date).toLocaleString('de-DE')}</p>
             ${post.attachments.length > 0 ? renderAttachments(post.attachments) : ''}
             <div class="post-actions">
                 <i class="fa-solid fa-pen-to-square" id="edit-post-btn"></i>
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const newTitle = editPostTitle.value;
         const newContent = editPostContent.value;
         const newAttachments = editPostAttachment.files;
-        const newDate = new Date().toLocaleString();
+        const newDate = new Date().toISOString();
         if (newTitle.trim() !== "" && newContent.trim() !== "") {
             currentPost.title = newTitle;
             currentPost.content = newContent;
@@ -95,6 +95,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (newAttachments.length > 0) {
                 currentPost.attachments = Array.from(newAttachments);
             }
+
+            // Update the post in the allPosts array in localStorage
+            const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
+            const postIndex = allPosts.findIndex(post => post.id === currentPost.id);
+            if (postIndex !== -1) {
+                allPosts[postIndex] = currentPost;
+                localStorage.setItem('allPosts', JSON.stringify(allPosts));
+            }
+
             localStorage.setItem('currentPost', JSON.stringify(currentPost)); // Aktualisieren des aktuellen Posts im localStorage
             postDetailsContainer.innerHTML = ''; // Clear the post details container
             renderPostDetails(currentPost); // Re-render the post details
@@ -110,8 +119,11 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function deletePost(postId) {
         if (confirm('Bist du sicher, dass du diesen Post löschen möchtest?')) {
-            localStorage.removeItem('currentPost'); // Entfernen des aktuellen Posts aus dem localStorage
-            window.location.href = 'home.html'; // Weiterleitung zur Homepage
+            let allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
+            allPosts = allPosts.filter(post => post.id !== postId);
+            localStorage.setItem('allPosts', JSON.stringify(allPosts));
+            localStorage.removeItem('currentPost');
+            window.location.href = 'home.html';
         }
     }
 
@@ -120,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     submitCommentBtn.addEventListener('click', function() {
         const commentText = commentContent.value;
-        const commentDate = new Date().toLocaleString();
+        const commentDate = new Date().toISOString();
         if (commentText.trim() !== "") {
             const comment = {
                 author: currentUser,
@@ -131,6 +143,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentPost.comments = [];
             }
             currentPost.comments.push(comment);
+
+            // Update the post in the allPosts array in localStorage
+            const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
+            const postIndex = allPosts.findIndex(post => post.id === currentPost.id);
+            if (postIndex !== -1) {
+                allPosts[postIndex].comments = currentPost.comments;
+                localStorage.setItem('allPosts', JSON.stringify(allPosts));
+            }
+
             localStorage.setItem('currentPost', JSON.stringify(currentPost)); // Aktualisieren des aktuellen Posts im localStorage
             renderComment(comment);
             commentContent.value = ""; // Clear the textarea
@@ -142,6 +163,28 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /**
+     * Deletes a comment.
+     * @param {Object} comment - The comment object to be deleted.
+     */
+    function deleteComment(comment) {
+        if (confirm('Bist du sicher, dass du diesen Kommentar löschen möchtest?')) {
+            currentPost.comments = currentPost.comments.filter(c => c !== comment);
+
+            // Update the post in the allPosts array in localStorage
+            const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
+            const postIndex = allPosts.findIndex(post => post.id === currentPost.id);
+            if (postIndex !== -1) {
+                allPosts[postIndex].comments = currentPost.comments;
+                localStorage.setItem('allPosts', JSON.stringify(allPosts));
+            }
+
+            localStorage.setItem('currentPost', JSON.stringify(currentPost)); // Aktualisieren des aktuellen Posts im localStorage
+            commentsContainer.innerHTML = ''; // Clear the comments container
+            currentPost.comments.forEach(renderComment); // Re-render all comments
+        }
+    }
+
+    /**
      * Renders a comment.
      * @param {Object} comment - The comment object to be rendered.
      */
@@ -151,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
         commentElement.innerHTML = `
             <p>${comment.content}</p>
             <p class="comment-author">Autor: ${comment.author}</p>
-            <p class="comment-date">Datum: ${comment.date}</p>
+            <p class="comment-date">Datum: ${new Date(comment.date).toLocaleString('de-DE')}</p>
             <div class="comment-actions">
                 <i class="fa-solid fa-pen-to-square edit-comment-btn"></i>
                 <i class="fa-solid fa-trash-can delete-comment-btn"></i>
@@ -167,24 +210,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /**
-     * Deletes a comment.
-     * @param {Object} comment - The comment object to be deleted.
-     */
-    function deleteComment(comment) {
-        if (confirm('Bist du sicher, dass du diesen Kommentar löschen möchtest?')) {
-            currentPost.comments = currentPost.comments.filter(c => c !== comment);
-            localStorage.setItem('currentPost', JSON.stringify(currentPost)); // Aktualisieren des aktuellen Posts im localStorage
-            commentsContainer.innerHTML = ''; // Clear the comments container
-            currentPost.comments.forEach(renderComment); // Re-render all comments
-        }
-    }
-
-    /**
      * Edits a comment.
      * @param {Object} comment - The comment object to be edited.
      * @param {HTMLElement} commentElement - The DOM element of the comment.
      */
     function editComment(comment, commentElement) {
+        // Ensure only one edit form is open at a time
+        if (editCommentForm) {
+            editCommentForm.remove();
+        }
+
         const editForm = document.createElement('div');
         editForm.className = 'comment-edit-form';
         editForm.innerHTML = `
@@ -192,15 +227,27 @@ document.addEventListener('DOMContentLoaded', function() {
             <button class="save-comment-btn btn btn-primary small-btn">Speichern</button>
         `;
         commentElement.appendChild(editForm);
+        editCommentForm = editForm;
+
         const saveCommentBtn = editForm.querySelector('.save-comment-btn');
         saveCommentBtn.addEventListener('click', function() {
             const newContent = editForm.querySelector('.edit-comment-content').value;
             if (newContent.trim() !== "") {
                 comment.content = newContent;
-                comment.date = new Date().toLocaleString(); // Update the date
+                comment.date = new Date().toISOString(); // Update the date
+
+                // Update the post in the allPosts array in localStorage
+                const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
+                const postIndex = allPosts.findIndex(post => post.id === currentPost.id);
+                if (postIndex !== -1) {
+                    allPosts[postIndex].comments = currentPost.comments;
+                    localStorage.setItem('allPosts', JSON.stringify(allPosts));
+                }
+
                 localStorage.setItem('currentPost', JSON.stringify(currentPost)); // Aktualisieren des aktuellen Posts im localStorage
                 commentsContainer.innerHTML = ''; // Clear the comments container
                 currentPost.comments.forEach(renderComment); // Re-render all comments
+                editCommentForm = null;
             } else {
                 alert("Kommentar darf nicht leer sein.");
             }

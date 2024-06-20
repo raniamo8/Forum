@@ -67,18 +67,22 @@
             </button>
         </div>
         <div id="post-creation-form" class="hidden form-container">
-            <i id="close-post-form" class="fa-solid fa-circle-xmark close-icon"></i>
             <input type="text" id="post-title" placeholder="Titel">
             <textarea id="post-content" placeholder="Schreibe hier deinen Post..."></textarea>
             <input type="file" id="post-attachment" multiple>
-            <button id="submit-post-btn" class="btn btn-primary small-btn">Posten</button>
+            <div class="form-buttons">
+                <button id="cancel-post-btn" class="btn btn-primary small-btn cancel-btn">Abbrechen</button>
+                <button id="submit-post-btn" class="btn btn-primary small-btn">Posten</button>
+            </div>
         </div>
         <div id="announcement-creation-form" class="hidden form-container">
-            <i id="close-announcement-form" class="fa-solid fa-circle-xmark close-icon"></i>
             <input type="text" id="announcement-title" placeholder="Titel">
             <textarea id="announcement-content" placeholder="Schreibe hier deine Ankündigung..."></textarea>
             <input type="file" id="announcement-attachment" multiple>
-            <button id="submit-announcement-btn" class="btn btn-primary small-btn">Ankündigung posten</button>
+            <div class="form-buttons">
+                <button id="cancel-announcement-btn" class="btn btn-primary small-btn cancel-btn">Abbrechen</button>
+                <button id="submit-announcement-btn" class="btn btn-primary small-btn">Ankündigung posten</button>
+            </div>
         </div>
         <div id="posts-container">
             <!-- Posts -->

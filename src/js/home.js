@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const postContent = document.getElementById('post-content').value;
         const attachments = postAttachment.files;
         const title = postTitle.value;
-        const date = new Date().toLocaleString();
+        const date = new Date().toISOString(); // Use ISO string for consistent date format
         if (title.trim() !== "" && postContent.trim() !== "") {
             const post = {
                 id: posts.length,
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             posts.push(post);
             localStorage.setItem('allPosts', JSON.stringify(posts));
-            renderPost(post);
+            renderPosts();
             document.getElementById('post-content').value = "";
             postTitle.value = "";
             postAttachment.value = "";
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const content = announcementContent.value;
         const attachments = announcementAttachment.files;
         const title = announcementTitle.value;
-        const date = new Date().toLocaleString();
+        const date = new Date().toISOString(); // Use ISO string for consistent date format
         if (title.trim() !== "" && content.trim() !== "") {
             const post = {
                 id: posts.length,
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 attachments: Array.from(attachments),
                 isAnnouncement: true
             };
-            posts.unshift(post);
+            posts.push(post);
             localStorage.setItem('allPosts', JSON.stringify(posts));
             renderPosts();
             announcementContent.value = "";
@@ -132,8 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const postElement = document.createElement('div');
         postElement.className = 'post';
         postElement.innerHTML = `
-            <p class="post-title">${post.title} ${post.isAnnouncement ? '<i class="fa-solid fa-bookmark"></i>' : ''}</p>
-            <p class="post-meta">Autor: ${post.author} | Datum: ${post.date}</p>
+            <p class="post-title">${post.isAnnouncement ? '<i class="fa-solid fa-bullhorn"></i>' : '<i class="fa-solid fa-note-sticky"></i>'} ${post.title}</p>
+            <p class="post-meta">Autor: ${post.author} | Datum: ${new Date(post.date).toLocaleString()}</p>
         `;
         postElement.addEventListener('click', function() {
             localStorage.setItem('currentPost', JSON.stringify(post));
@@ -147,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function renderPosts() {
         postsContainer.innerHTML = '';
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
         posts.forEach(renderPost);
     }
 

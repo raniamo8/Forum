@@ -1,11 +1,10 @@
-// src/js/logout.js
 document.addEventListener('DOMContentLoaded', function() {
-    const logoutButton = document.getElementById('logout-button');
+    const logoutButton = document.querySelector('.fa-right-from-bracket').parentElement;
 
-    if (logoutButton) {
-        logoutButton.addEventListener('click', function() {
-            localStorage.removeItem('userRole');
-            window.location.href = '../../pages/login.html'; // Weiterleitung zur Login-Seite
-        });
-    }
+    logoutButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        localStorage.removeItem('username');
+        localStorage.removeItem('userRole');
+        window.location.href = '/Forum/src/html/pages/login.html';
+    });
 });

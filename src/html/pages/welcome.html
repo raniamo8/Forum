@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Willkommen Admin</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+        }
+        video {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+<video id="welcome-video" src="../../assets/videos/willkommen-admin.mp4" autoplay></video>
+<script>
+    const video = document.getElementById('welcome-video');
+    video.onended = () => {
+        window.location.href = "home.html";
+    };
+</script>
+</body>
+</html>

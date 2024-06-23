@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * @param {Event} event - The form submission event.
      */
     loginForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevents page reload
+        event.preventDefault(); // Verhindert das Neuladen der Seite
 
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (email === credentials.admin.username && password === credentials.admin.password) {
             alert('Admin erfolgreich angemeldet');
             localStorage.setItem('userRole', 'admin');
-            localStorage.setItem('username', 'Admin'); // Save the username
-            window.location.href = "../../html/pages/home.html";
+            localStorage.setItem('username', 'Admin'); // Benutzernamen speichern
+            window.location.href = "welcome.html"; // Weiterleitung zur Willkommensseite
         } else if (email === credentials.user.username && password === credentials.user.password) {
             alert('User erfolgreich angemeldet');
             localStorage.setItem('userRole', 'user');
-            localStorage.setItem('username', 'User'); // Save the username
-            window.location.href = "../../html/pages/home.html";
+            localStorage.setItem('username', 'User'); // Benutzernamen speichern
+            window.location.href = "home.html";
         } else {
             alert('Falsche Anmeldedaten');
         }

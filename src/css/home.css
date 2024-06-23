@@ -2,18 +2,22 @@
 .main {
     padding: 20px 0;
 }
-
 .post-header {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     margin: 20px 0;
 }
 
-.post-buttons {
+.post-header-detail {
+    margin: 20px 0;
+}
+
+.post-header-button {
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
 .post-header h2 {
@@ -57,6 +61,17 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: none;
+}
+
+#post-creation-form select,
+#announcement-creation-form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    font-family: "Arial", sans-serif;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .form-buttons {
@@ -168,4 +183,19 @@ footer {
     width: 100%;
     position: relative;
     bottom: 0;
+}
+
+
+.filter-container {
+    display: flex;
+    align-items: center;
+}
+
+.filter-container span {
+    margin-right: 10px;
+}
+
+.filter-container select {
+    padding: 5px;
+    font-size: 14px;
 }

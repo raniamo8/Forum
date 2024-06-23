@@ -11,13 +11,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const postsContainer = document.getElementById('posts-container');
     const postAttachment = document.getElementById('post-attachment');
     const postTitle = document.getElementById('post-title');
+    const postCategory = document.getElementById('post-category');
     const createAnnouncementBtn = document.getElementById('create-announcement-btn');
     const cancelAnnouncementBtn = document.getElementById('cancel-announcement-btn');
     const announcementCreationForm = document.getElementById('announcement-creation-form');
     const submitAnnouncementBtn = document.getElementById('submit-announcement-btn');
     const announcementTitle = document.getElementById('announcement-title');
     const announcementContent = document.getElementById('announcement-content');
+    const announcementCategory = document.getElementById('announcement-category');
     const announcementAttachment = document.getElementById('announcement-attachment');
+    const categoryFilter = document.getElementById('category-filter');
     const currentUser = localStorage.getItem('username');
     const userRole = localStorage.getItem('userRole');
     let posts = JSON.parse(localStorage.getItem('allPosts')) || [];
@@ -49,27 +52,30 @@ document.addEventListener('DOMContentLoaded', function() {
         const postContent = document.getElementById('post-content').value;
         const attachments = postAttachment.files;
         const title = postTitle.value;
-        const date = new Date().toISOString();
-        if (title.trim() !== "" && postContent.trim() !== "") {
+        const category = postCategory.value;
+        const date = new Date().toISOString(); // Save date as ISO string for sorting
+        if (title.trim() !== "" && postContent.trim() !== "" && category !== "") {
             const post = {
                 id: posts.length,
                 title,
                 content: postContent,
                 author: currentUser,
                 date,
+                category,
                 attachments: Array.from(attachments),
                 isAnnouncement: false,
-                comments: []
+                comments: []  // Initial empty comments array
             };
             posts.push(post);
             localStorage.setItem('allPosts', JSON.stringify(posts));
             renderPosts(); // Re-render all posts
             document.getElementById('post-content').value = "";
             postTitle.value = "";
+            postCategory.value = "";
             postAttachment.value = "";
             postCreationForm.style.display = 'none';
         } else {
-            alert("Titel und Inhalt dürfen nicht leer sein.");
+            alert("Titel, Inhalt und Kategorie dürfen nicht leer sein.");
         }
     });
 
@@ -95,26 +101,29 @@ document.addEventListener('DOMContentLoaded', function() {
         const content = announcementContent.value;
         const attachments = announcementAttachment.files;
         const title = announcementTitle.value;
-        const date = new Date().toISOString();
-        if (title.trim() !== "" && content.trim() !== "") {
+        const category = announcementCategory.value;
+        const date = new Date().toISOString(); // Save date as ISO string for sorting
+        if (title.trim() !== "" && content.trim() !== "" && category !== "") {
             const post = {
                 id: posts.length,
                 title,
                 content,
                 author: currentUser,
                 date,
+                category,
                 attachments: Array.from(attachments),
                 isAnnouncement: true
             };
-            posts.push(post);
+            posts.push(post); // Add announcement at the beginning
             localStorage.setItem('allPosts', JSON.stringify(posts));
-            renderPosts();
+            renderPosts(); // Re-render all posts to show the new announcement at the top
             announcementContent.value = "";
             announcementTitle.value = "";
+            announcementCategory.value = "";
             announcementAttachment.value = "";
             announcementCreationForm.style.display = 'none';
         } else {
-            alert("Titel und Inhalt dürfen nicht leer sein.");
+            alert("Titel, Inhalt und Kategorie dürfen nicht leer sein.");
         }
     });
 
@@ -128,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * @param {string} post.date - The date the post was created.
      * @param {Array} post.attachments - The attachments of the post.
      * @param {boolean} post.isAnnouncement - Whether the post is an announcement.
+     * @param {string} post.category - The category of the post.
      */
     function renderPost(post) {
         const postElement = document.createElement('div');
@@ -139,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </p>
             <p class="post-meta">
                 ${post.isAnnouncement ? '<i class="fa-solid fa-bullhorn"></i>' : '<i class="fa-solid fa-note-sticky"></i>'}
-                Autor: ${post.author} | Datum: ${new Date(post.date).toLocaleString('de-DE')}
+                Autor: ${post.author} | Datum: ${new Date(post.date).toLocaleString('de-DE')} | Kategorie: ${post.category}
             </p>
         `;
         postElement.addEventListener('click', function() {
@@ -154,9 +164,10 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function renderPosts() {
         postsContainer.innerHTML = '';
+        const filteredCategory = categoryFilter.value;
         posts
-            // descending order
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort posts by date in descending order
+            .filter(post => filteredCategory === "" || post.category === filteredCategory) // Filter by category
             .forEach(renderPost);
     }
 
@@ -164,4 +175,11 @@ document.addEventListener('DOMContentLoaded', function() {
      * Loads posts from localStorage and renders them.
      */
     renderPosts();
+
+    /**
+     * Adds event listener to the category filter.
+     */
+    categoryFilter.addEventListener('change', function() {
+        renderPosts();
+    });
 });

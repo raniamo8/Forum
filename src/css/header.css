@@ -142,7 +142,8 @@
     .header .row .header-content .nav-group ul li a span {
         display: inline-block;
         text-transform: capitalize;
-        font-size: var(--fs14);
+        font-size: smaller;
+        /*font-size: var(--fs14);*/
         font-weight: 500;
         color: var(--whiteColor);
         margin-left: 0.5rem;

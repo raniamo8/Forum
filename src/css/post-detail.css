@@ -91,3 +91,14 @@
     font-family: "Arial", sans-serif;
     margin-top: 10px;
 }
+
+
+.post-category-edit{
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    font-family: "Arial", sans-serif;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

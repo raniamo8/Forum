@@ -50,11 +50,20 @@
         <div class="post-header-detail" id="post-details">
             <!-- Post Details -->
         </div>
-        <div id="post-editing-form" class="hidden">
+        <div id="post-editing-form" class="hidden form-container">
             <input type="text" id="edit-post-title" placeholder="Titel">
             <textarea id="edit-post-content" placeholder="Schreibe hier deinen Post..."></textarea>
-            <input type="file" id="edit-post-attachment" multiple>
-            <button id="save-edit-btn" class="btn btn-primary small-btn">Speichern</button>
+            <select id="edit-post-category" class="post-category-edit">
+                <option value="">Kategorie auswählen</option>
+                <option value="Produkt 1">Produkt 1</option>
+                <option value="Produkt 2">Produkt 2</option>
+                <option value="Produkt 3">Produkt 3</option>
+            </select>
+            <input type="file" id="post-attachment" multiple style="display: none;">
+            <div class="form-buttons">
+                <button id="cancel-edit-btn" class="btn btn-primary small-btn cancel-btn">Abbrechen</button>
+                <button id="save-edit-btn" class="btn btn-primary small-btn">Speichern</button>
+            </div>
         </div>
         <div id="comments-section">
             <!-- Comment form -->
@@ -78,9 +87,7 @@
     </div>
 </footer>
 
-<script
-        src="https://kit.fontawesome.com/9e5ba2e3f5.js"
-        crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/9e5ba2e3f5.js" crossorigin="anonymous"></script>
 <script src="../../js/post-detail.js"></script>
 <script src="../../js/search.js"></script>
 <script src="../../js/logout.js"></script>

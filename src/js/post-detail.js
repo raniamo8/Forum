@@ -6,9 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const postDetailsContainer = document.getElementById('post-details');
     const editPostForm = document.getElementById('post-editing-form');
     const saveEditBtn = document.getElementById('save-edit-btn');
+    const cancelEditBtn = document.getElementById('cancel-edit-btn');
     const editPostTitle = document.getElementById('edit-post-title');
     const editPostContent = document.getElementById('edit-post-content');
-    const editPostAttachment = document.getElementById('edit-post-attachment');
+    const editPostCategory = document.getElementById('edit-post-category');
     const currentPost = JSON.parse(localStorage.getItem('currentPost'));
     const commentContent = document.getElementById('comment-content');
     const submitCommentBtn = document.getElementById('submit-comment-btn');
@@ -33,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>${post.content}</p>
             <p>Autor: ${post.author}</p>
             <p id="post-date">Datum: ${new Date(post.date).toLocaleString('de-DE')}</p>
-            ${post.attachments.length > 0 ? renderAttachments(post.attachments) : ''}
             <div class="post-actions">
                 <i class="fa-solid fa-pen-to-square" id="edit-post-btn"></i>
                 <i class="fa-solid fa-trash-can" id="delete-post-btn"></i>
@@ -57,26 +57,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /**
-     * Renders the attachments of a post.
-     * @param {Array} attachments - Array of attachment objects.
-     * @returns {string} - HTML string for the attachments.
-     */
-    function renderAttachments(attachments) {
-        return `
-            <ul>
-                ${attachments.map(attachment => `<li>${attachment.name}</li>`).join('')}
-            </ul>
-        `;
-    }
-
-    /**
      * Handles the editing of a post.
      * @param {Object} post - The post object to be edited.
      */
     function editPost(post) {
         editPostTitle.value = post.title;
         editPostContent.value = post.content;
-        editPostAttachment.value = ""; // Clear the file input
+        editPostCategory.value = post.category || ''; // Set category value
         editPostForm.style.display = 'block'; // Zeige das Bearbeitungsformular
     }
 
@@ -86,15 +73,13 @@ document.addEventListener('DOMContentLoaded', function() {
     saveEditBtn.addEventListener('click', function() {
         const newTitle = editPostTitle.value;
         const newContent = editPostContent.value;
-        const newAttachments = editPostAttachment.files;
+        const newCategory = editPostCategory.value;
         const newDate = new Date().toISOString();
-        if (newTitle.trim() !== "" && newContent.trim() !== "") {
+        if (newTitle.trim() !== "" && newContent.trim() !== "" && newCategory.trim() !== "") {
             currentPost.title = newTitle;
             currentPost.content = newContent;
             currentPost.date = newDate;
-            if (newAttachments.length > 0) {
-                currentPost.attachments = Array.from(newAttachments);
-            }
+            currentPost.category = newCategory;
 
             // Update the post in the allPosts array in localStorage
             const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
@@ -109,8 +94,15 @@ document.addEventListener('DOMContentLoaded', function() {
             renderPostDetails(currentPost);
             editPostForm.style.display = 'none';
         } else {
-            alert("Titel und Inhalt dürfen nicht leer sein.");
+            alert("Titel, Inhalt und Kategorie dürfen nicht leer sein.");
         }
+    });
+
+    /**
+     * Closes the edit post form.
+     */
+    cancelEditBtn.addEventListener('click', function() {
+        editPostForm.style.display = 'none';
     });
 
     /**
@@ -145,7 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
             currentPost.comments.push(comment);
 
             // Update the post in the allPosts array in localStorage
-            //TODO:refactor?
             const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
             const postIndex = allPosts.findIndex(post => post.id === currentPost.id);
             if (postIndex !== -1) {

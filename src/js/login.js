@@ -25,12 +25,12 @@ document.addEventListener('DOMContentLoaded', function() {
          * If the credentials match, sets the user role and redirects to the home page.
          */
         if (email === credentials.admin.username && password === credentials.admin.password) {
-            alert('Admin erfolgreich angemeldet');
+            //alert('Admin erfolgreich angemeldet');
             localStorage.setItem('userRole', 'admin');
             localStorage.setItem('username', 'Admin'); // Benutzernamen speichern
             window.location.href = "welcome.html"; // Weiterleitung zur Willkommensseite
         } else if (email === credentials.user.username && password === credentials.user.password) {
-            alert('User erfolgreich angemeldet');
+            //alert('User erfolgreich angemeldet');
             localStorage.setItem('userRole', 'user');
             localStorage.setItem('username', 'User'); // Benutzernamen speichern
             window.location.href = "home.html";

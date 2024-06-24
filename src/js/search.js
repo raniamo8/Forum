@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (postsContainer) {
                 const titleElement = post.querySelector('.post-title');
-                const contentElement = post.querySelector('.post-details');
+                const contentElement = post.querySelector('.post-meta');
 
                 if (!titleElement) {
                     console.error('Post-Titel nicht gefunden', post);

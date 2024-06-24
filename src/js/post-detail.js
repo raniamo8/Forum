@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const editForm = document.createElement('div');
         editForm.className = 'comment-edit-form';
         editForm.innerHTML = `
-            <textarea class="edit-comment-content">${comment.content}</textarea>
+            <textarea class="edit-comment-content comment-edit">${comment.content}</textarea>
             <button class="save-comment-btn btn btn-primary small-btn">Speichern</button>
         `;
         commentElement.appendChild(editForm);

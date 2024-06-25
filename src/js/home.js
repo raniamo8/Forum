@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const attachments = postAttachment.files;
         const title = postTitle.value;
         const category = postCategory.value;
-        const date = new Date().toISOString(); // Save date as ISO string for sorting
+        const date = new Date().toISOString();
         if (title.trim() !== "" && postContent.trim() !== "" && category !== "") {
             const post = {
                 id: posts.length,
@@ -64,11 +64,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 category,
                 attachments: Array.from(attachments),
                 isAnnouncement: false,
-                comments: []  // Initial empty comments array
+                comments: []
             };
             posts.push(post);
             localStorage.setItem('allPosts', JSON.stringify(posts));
-            renderPosts(); // Re-render all posts
+            renderPosts();
             document.getElementById('post-content').value = "";
             postTitle.value = "";
             postCategory.value = "";
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const attachments = announcementAttachment.files;
         const title = announcementTitle.value;
         const category = announcementCategory.value;
-        const date = new Date().toISOString(); // Save date as ISO string for sorting
+        const date = new Date().toISOString();
         if (title.trim() !== "" && content.trim() !== "" && category !== "") {
             const post = {
                 id: posts.length,
@@ -114,9 +114,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 attachments: Array.from(attachments),
                 isAnnouncement: true
             };
-            posts.push(post); // Add announcement at the beginning
+            posts.push(post);
             localStorage.setItem('allPosts', JSON.stringify(posts));
-            renderPosts(); // Re-render all posts to show the new announcement at the top
+            renderPosts();
             announcementContent.value = "";
             announcementTitle.value = "";
             announcementCategory.value = "";
@@ -166,8 +166,10 @@ document.addEventListener('DOMContentLoaded', function() {
         postsContainer.innerHTML = '';
         const filteredCategory = categoryFilter.value;
         posts
-            .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort posts by date in descending order
-            .filter(post => filteredCategory === "" || post.category === filteredCategory) // Filter by category
+            // Sort posts by date in descending order
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            // Filter by category
+            .filter(post => filteredCategory === "" || post.category === filteredCategory)
             .forEach(renderPost);
     }
 

@@ -4,8 +4,8 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
-    const postsContainer = document.getElementById('posts-container'); // Container for posts
-    const searchResults = document.getElementById('search-results'); // Container for search results
+    const postsContainer = document.getElementById('posts-container');
+    const searchResults = document.getElementById('search-results');
 
     if (!searchInput) {
         console.error('Suchleiste nicht gefunden');
@@ -52,12 +52,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (posts.length === 0) {
             console.warn('Keine Posts gefunden');
-            searchResults.innerHTML = ''; // Clear previous search results if no posts found
+            searchResults.innerHTML = '';
             return;
         }
 
         console.log('Anzahl der Posts:', posts.length);
-        searchResults.innerHTML = ''; // Clear previous search results
+        searchResults.innerHTML = '';
 
         posts.forEach(post => {
             let title = '';
@@ -94,9 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultItem.addEventListener('click', function() {
                     console.log('Suchergebnis angeklickt:', title);
                     if (postsContainer) {
-                        post.click(); // Simulate click on the post to trigger the same logic
+                        post.click();
                     } else {
-                        localStorage.setItem('currentPost', JSON.stringify(post)); // Save the current post
+                        localStorage.setItem('currentPost', JSON.stringify(post));
                         window.location.href = '/Forum/src/html/pages/post-detail.html';
                     }
                 });
@@ -106,13 +106,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         if (searchResults.innerHTML === '') {
-            searchResults.style.display = 'none'; // Hide dropdown if no results found
+            searchResults.style.display = 'none';
         } else {
-            searchResults.style.display = 'block'; // Show dropdown if results found
+            searchResults.style.display = 'block';
         }
 
         if (searchTerm === '') {
-            searchResults.style.display = 'none'; // Hide dropdown if search term is cleared
+            searchResults.style.display = 'none';
         }
     }
 

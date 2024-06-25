@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function editPost(post) {
         editPostTitle.value = post.title;
         editPostContent.value = post.content;
-        editPostCategory.value = post.category || ''; // Set category value
-        editPostForm.style.display = 'block'; // Zeige das Bearbeitungsformular
+        editPostCategory.value = post.category || '';
+        editPostForm.style.display = 'block';
     }
 
     /**
@@ -226,7 +226,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const newContent = editForm.querySelector('.edit-comment-content').value;
             if (newContent.trim() !== "") {
                 comment.content = newContent;
-                comment.date = new Date().toISOString(); // Update the date
+                // Update the date
+                comment.date = new Date().toISOString();
 
                 // Update the post in the allPosts array in localStorage
                 const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];

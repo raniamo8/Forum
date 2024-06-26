@@ -142,7 +142,6 @@
         display: inline-block;
         text-transform: capitalize;
         font-size: smaller;
-        /*font-size: var(--fs14);*/
         font-weight: 500;
         color: var(--whiteColor);
         margin-left: 0.5rem;

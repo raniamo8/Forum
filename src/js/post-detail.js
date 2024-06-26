@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <i class="fa-solid fa-trash-can" id="delete-post-btn"></i>
                 <i class="fa-solid fa-thumbs-up" id="like-button"></i>
                 <span id="like-count">${post.likes ? post.likes.length : 0}</span>
-                <i class="fa-solid fa-comment" id="comment-post-btn"></i>
             </div>
         `;
         document.getElementById('edit-post-btn').addEventListener('click', function() {
@@ -50,9 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         document.getElementById('like-button').addEventListener('click', function() {
             toggleLikePost(post);
-        });
-        document.getElementById('comment-post-btn').addEventListener('click', function() {
-            toggleCommentForm();
         });
     }
 
@@ -147,8 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('currentPost', JSON.stringify(currentPost));
             renderComment(comment);
             commentContent.value = "";
-            //commentContent.style.display = 'none';
-            //submitCommentBtn.style.display = 'none';
         } else {
             alert("Kommentar darf nicht leer sein.");
         }
@@ -278,14 +272,5 @@ document.addEventListener('DOMContentLoaded', function() {
             post.likes = [];
         }
         return post.likes.includes(currentUser);
-    }
-
-    /**
-     * Toggles the visibility of the comment form.
-     */
-    function toggleCommentForm() {
-        const isVisible = commentContent.style.display === 'block';
-        commentContent.style.display = isVisible ? 'none' : 'block';
-        submitCommentBtn.style.display = isVisible ? 'none' : 'block';
     }
 });

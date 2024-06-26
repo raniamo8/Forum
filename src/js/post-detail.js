@@ -147,8 +147,8 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('currentPost', JSON.stringify(currentPost));
             renderComment(comment);
             commentContent.value = "";
-            commentContent.style.display = 'none';
-            submitCommentBtn.style.display = 'none';
+            //commentContent.style.display = 'none';
+            //submitCommentBtn.style.display = 'none';
         } else {
             alert("Kommentar darf nicht leer sein.");
         }

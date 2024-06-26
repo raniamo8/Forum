@@ -1,9 +1,3 @@
-//TODO: Main als Startpunkt für den Server
-//TODO: Funktion Beitrag als abgeschlossen
-//TODO: Medien hochladen, bearbeiten, löschen, anklicken und downloaden
-//TODO: Tag
-//TODO: jest
-
 document.addEventListener('DOMContentLoaded', function() {
     checkLoginStatus();
 });

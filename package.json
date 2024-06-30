@@ -10,7 +10,10 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.6",
     "jest": "^29.7.0",
-    "jsdoc": "4.0.3"
+    "jest-environment-jsdom": "^29.7.0",
+    "jsdoc": "4.0.3",
+    "jsdom": "^24.1.0"
   }
 }

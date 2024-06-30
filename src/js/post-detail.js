@@ -1,46 +1,55 @@
-/**
- * @file Manages the display and interaction with post details, including editing, deleting, liking, and commenting on posts.
- */
-
 document.addEventListener('DOMContentLoaded', function() {
     const postDetailsContainer = document.getElementById('post-details');
+    const postClosedInfo = document.getElementById('post-closed-info');
     const editPostForm = document.getElementById('post-editing-form');
     const saveEditBtn = document.getElementById('save-edit-btn');
     const cancelEditBtn = document.getElementById('cancel-edit-btn');
     const editPostTitle = document.getElementById('edit-post-title');
     const editPostContent = document.getElementById('edit-post-content');
     const editPostCategory = document.getElementById('edit-post-category');
-    const currentPost = JSON.parse(localStorage.getItem('currentPost'));
     const commentContent = document.getElementById('comment-content');
     const submitCommentBtn = document.getElementById('submit-comment-btn');
     const commentsContainer = document.getElementById('comments-container');
     const currentUser = localStorage.getItem('username');
+    const currentPost = JSON.parse(localStorage.getItem('currentPost'));
     let editCommentForm = null;
 
     if (currentPost) {
+        console.log("Current post found:", currentPost);
         renderPostDetails(currentPost);
         if (currentPost.comments) {
             currentPost.comments.forEach(comment => renderComment(comment));
         }
+        if (currentPost.closed) {
+            console.log("Post is closed");
+            lockPostFunctions();
+            postClosedInfo.classList.remove('hidden');
+        } else {
+            console.log("Post is not closed");
+            postClosedInfo.classList.add('hidden');
+        }
+    } else {
+        console.log("No current post found");
     }
 
-    /**
-     * Renders the details of a post.
-     * @param {Object} post - The post object to be rendered.
-     */
     function renderPostDetails(post) {
+        console.log("Rendering post details:", post);
         postDetailsContainer.innerHTML = `
             <h2>${post.title}</h2>
             <p>${post.content}</p>
             <p>Autor: ${post.author}</p>
             <p id="post-date">Datum: ${new Date(post.date).toLocaleString('de-DE')}</p>
             <div class="post-actions">
+                <i class="fa-solid fa-square-check" id="close-post-btn"></i>
                 <i class="fa-solid fa-pen-to-square" id="edit-post-btn"></i>
                 <i class="fa-solid fa-trash-can" id="delete-post-btn"></i>
                 <i class="fa-solid fa-thumbs-up" id="like-button"></i>
                 <span id="like-count">${post.likes ? post.likes.length : 0}</span>
             </div>
         `;
+        document.getElementById('close-post-btn').addEventListener('click', function() {
+            closePost(post);
+        });
         document.getElementById('edit-post-btn').addEventListener('click', function() {
             editPost(post);
         });
@@ -52,20 +61,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    /**
-     * Handles the editing of a post.
-     * @param {Object} post - The post object to be edited.
-     */
     function editPost(post) {
+        console.log("Editing post:", post);
         editPostTitle.value = post.title;
         editPostContent.value = post.content;
         editPostCategory.value = post.category || '';
         editPostForm.style.display = 'block';
     }
 
-    /**
-     * Saves the edited post.
-     */
     saveEditBtn.addEventListener('click', function() {
         const newTitle = editPostTitle.value;
         const newContent = editPostContent.value;
@@ -77,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function() {
             currentPost.date = newDate;
             currentPost.category = newCategory;
 
-            // Update the post in the allPosts array in localStorage
             const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
             const postIndex = allPosts.findIndex(post => post.id === currentPost.id);
             if (postIndex !== -1) {
@@ -94,17 +96,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /**
-     * Closes the edit post form.
-     */
     cancelEditBtn.addEventListener('click', function() {
         editPostForm.style.display = 'none';
     });
 
-    /**
-     * Deletes a post.
-     * @param {number} postId - The ID of the post to be deleted.
-     */
     function deletePost(postId) {
         if (confirm('Bist du sicher, dass du diesen Post löschen möchtest?')) {
             let allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
@@ -115,9 +110,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    /**
-     * Submits a new comment.
-     */
+    function closePost(post) {
+        if (post.closed) {
+            alert("Dieses Thema ist bereits abgeschlossen.");
+            return;
+        }
+        if (confirm('Bist du sicher, dass du dieses Thema abschließen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.')) {
+            post.closed = true;
+
+            const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
+            const postIndex = allPosts.findIndex(p => p.id === post.id);
+            if (postIndex !== -1) {
+                allPosts[postIndex] = post;
+                localStorage.setItem('allPosts', JSON.stringify(allPosts));
+            }
+
+            localStorage.setItem('currentPost', JSON.stringify(post));
+            lockPostFunctions();
+            postClosedInfo.classList.remove('hidden');
+        }
+    }
+
+    function lockPostFunctions() {
+        console.log("Locking post functions");
+        document.getElementById('edit-post-btn').style.display = 'none';
+        document.getElementById('like-button').style.display = 'none';
+        commentContent.style.display = 'none';
+        submitCommentBtn.style.display = 'none';
+
+        document.querySelectorAll('.edit-comment-btn').forEach(btn => btn.style.display = 'none');
+        document.querySelectorAll('.delete-comment-btn').forEach(btn => btn.style.display = 'none');
+    }
+
     submitCommentBtn.addEventListener('click', function() {
         const commentText = commentContent.value;
         const commentDate = new Date().toISOString();
@@ -132,7 +156,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             currentPost.comments.push(comment);
 
-            // Update the post in the allPosts array in localStorage
             const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
             const postIndex = allPosts.findIndex(post => post.id === currentPost.id);
             if (postIndex !== -1) {
@@ -148,15 +171,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /**
-     * Deletes a comment.
-     * @param {Object} comment - The comment object to be deleted.
-     */
     function deleteComment(comment) {
         if (confirm('Bist du sicher, dass du diesen Kommentar löschen möchtest?')) {
             currentPost.comments = currentPost.comments.filter(c => c !== comment);
 
-            // Update the post in the allPosts array in localStorage
             const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
             const postIndex = allPosts.findIndex(post => post.id === currentPost.id);
             if (postIndex !== -1) {
@@ -170,10 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    /**
-     * Renders a comment.
-     * @param {Object} comment - The comment object to be rendered.
-     */
     function renderComment(comment) {
         const commentElement = document.createElement('div');
         commentElement.className = 'comment';
@@ -195,13 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
         commentsContainer.appendChild(commentElement);
     }
 
-    /**
-     * Edits a comment.
-     * @param {Object} comment - The comment object to be edited.
-     * @param {HTMLElement} commentElement - The DOM element of the comment.
-     */
     function editComment(comment, commentElement) {
-        // Ensure only one edit form is open at a time
         if (editCommentForm) {
             editCommentForm.remove();
         }
@@ -220,10 +228,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const newContent = editForm.querySelector('.edit-comment-content').value;
             if (newContent.trim() !== "") {
                 comment.content = newContent;
-                // Update the date
                 comment.date = new Date().toISOString();
 
-                // Update the post in the allPosts array in localStorage
                 const allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
                 const postIndex = allPosts.findIndex(post => post.id === currentPost.id);
                 if (postIndex !== -1) {
@@ -241,10 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    /**
-     * Toggles the like status of a post.
-     * @param {Object} post - The post object to be liked/unliked.
-     */
     function toggleLikePost(post) {
         if (!post.likes) {
             post.likes = [];
@@ -262,15 +264,17 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('like-button').className = userIndex === -1 ? 'fa-solid fa-thumbs-up liked' : 'fa-solid fa-thumbs-up';
     }
 
-    /**
-     * Checks if the current user has liked the post.
-     * @param {Object} post - The post object to check.
-     * @returns {boolean} - True if the user has liked the post, false otherwise.
-     */
     function hasUserLikedPost(post) {
         if (!post.likes) {
             post.likes = [];
         }
         return post.likes.includes(currentUser);
     }
+
+    document.addEventListener('click', function(event) {
+        const postOptionsMenu = document.getElementById('post-options-menu');
+        if (postOptionsMenu && !postOptionsMenu.contains(event.target) && !event.target.matches('#post-options-btn')) {
+            postOptionsMenu.classList.add('hidden');
+        }
+    });
 });

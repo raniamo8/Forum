@@ -107,5 +107,5 @@ Forum
 
 ## License
 
-This project is licensed under the [Eclipse Public License 2.0](https://github.com/ChristianMinich/Forum/LICENSE).
+This project is licensed under the [Eclipse Public License 2.0]([https://github.com/raniamo8/Forum/blob/master/LICENSE]).
 

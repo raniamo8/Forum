@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isClickInside) {
             searchResults.style.display = 'none';
             searchInput.value = '';
-            console.log('Klick außerhalb des Suchfelds und der Dropdown-Liste, Dropdown geschlossen und Suchfeld geleert');
+            //console.log('Klick außerhalb des Suchfelds und der Dropdown-Liste, Dropdown geschlossen und Suchfeld geleert');
         }
     });
 

@@ -58,6 +58,7 @@ npm install --save-dev jest
 2. Run all tests:
 ```
 npm run test
+```
 
 ## Folder Structure
 

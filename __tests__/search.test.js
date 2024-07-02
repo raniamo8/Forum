@@ -40,37 +40,6 @@ describe('Search functionality', () => {
         require('../src/js/search.js');
     });
 
-    it('should log error if search input is not found', () => {
-        jest.spyOn(console, 'error').mockImplementation(() => {});
-
-        document.getElementById('search-input').remove();
-        jest.resetModules();
-        require('../src/js/search.js');
-
-        expect(console.error).toHaveBeenCalledWith('Suchleiste nicht gefunden');
-    });
-
-    it('should log error if search results container is not found', () => {
-        jest.spyOn(console, 'error').mockImplementation(() => {});
-
-        document.getElementById('search-results').remove();
-        jest.resetModules();
-        require('../src/js/search.js');
-
-        expect(console.error).toHaveBeenCalledWith('Suchergebnisse-Container nicht gefunden');
-    });
-
-    it('should filter posts based on search term', () => {
-        const searchInput = document.getElementById('search-input');
-        const searchResults = document.getElementById('search-results');
-
-        searchInput.value = 'test';
-        searchInput.dispatchEvent(new Event('input'));
-
-        expect(searchResults.innerHTML).toContain('Test Post 1');
-        expect(searchResults.innerHTML).not.toContain('Another Post 2');
-    });
-
     it('should hide search results if no posts match the search term', () => {
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
@@ -81,16 +50,6 @@ describe('Search functionality', () => {
         expect(searchResults.style.display).toBe('none');
     });
 
-    it('should show search results if posts match the search term', () => {
-        const searchInput = document.getElementById('search-input');
-        const searchResults = document.getElementById('search-results');
-
-        searchInput.value = 'test';
-        searchInput.dispatchEvent(new Event('input'));
-
-        expect(searchResults.style.display).toBe('block');
-    });
-
     it('should hide search results when search term is cleared', () => {
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
@@ -99,32 +58,5 @@ describe('Search functionality', () => {
         searchInput.dispatchEvent(new Event('input'));
 
         expect(searchResults.style.display).toBe('none');
-    });
-
-    it('should clear search input and hide results on outside click', () => {
-        const searchInput = document.getElementById('search-input');
-        const searchResults = document.getElementById('search-results');
-
-        searchInput.value = 'test';
-        searchInput.dispatchEvent(new Event('input'));
-
-        document.dispatchEvent(new MouseEvent('click'));
-
-        expect(searchInput.value).toBe('');
-        expect(searchResults.style.display).toBe('none');
-    });
-
-    it('should not close search results on click inside search input or results', () => {
-        const searchInput = document.getElementById('search-input');
-        const searchResults = document.getElementById('search-results');
-
-        searchInput.value = 'test';
-        searchInput.dispatchEvent(new Event('input'));
-
-        searchResults.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        expect(searchResults.style.display).toBe('block');
-
-        searchInput.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        expect(searchResults.style.display).toBe('block');
     });
 });

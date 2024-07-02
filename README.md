@@ -44,10 +44,6 @@ npm install -g jsdoc
 ```
 npm install --save-dev jsdoc
 ```
-2. Change Directory 
-```
-cd webtech_project
-```
 
 ## Jest
 

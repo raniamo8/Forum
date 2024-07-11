@@ -11,9 +11,10 @@ Community Forum is a frontend application.
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/raniamo8/Forum.git`
-2. Navigate to the project directory: `cd forum`
-3. Install the dependencies: `npm install`
+1. Download the IDE Webstorm.
+2. Clone the repository: `git clone https://github.com/raniamo8/Forum.git`
+3. Navigate to the project directory: `cd forum`
+4. Install the dependencies: `npm install`
 
 ## Run Configuration
 To Create a built in server you need to follow this steps
